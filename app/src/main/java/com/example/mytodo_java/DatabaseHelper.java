@@ -1,9 +1,11 @@
 package com.example.mytodo_java;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,7 +28,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String query = "CREATE TABLE " + TABLE_NAME + " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_TITLE + " TEXT, " + COLUMN_AUTHOR + " TEXT" + COLUMN_PAGES + " INTEGER);";
+        String query = "CREATE TABLE " + TABLE_NAME + " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_TITLE + " TEXT, " + COLUMN_AUTHOR + " TEXT, " + COLUMN_PAGES + " INTEGER);";
     db.execSQL(query);
     }
 
@@ -34,5 +36,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS "+ TABLE_NAME);
         onCreate(db);
+    }
+
+    void addItem(String title,String author, int pages){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cvalues = new ContentValues(); //we want store in this object, all our data from our application and then pass this to the db
+
+        cvalues.put(COLUMN_TITLE,title); //first parameter is the column name and second is the data
+        cvalues.put(COLUMN_AUTHOR,author);
+        cvalues.put(COLUMN_PAGES,pages);
+
+       long result = db.insert(TABLE_NAME,null,cvalues);
+       if(result == -1){
+           //-1 means operation failed
+           Toast.makeText(context,"Operation Failed",Toast.LENGTH_SHORT).show();
+       }else{
+           Toast.makeText(context,"Data successfully added to database",Toast.LENGTH_SHORT).show();
+       }
     }
 }
