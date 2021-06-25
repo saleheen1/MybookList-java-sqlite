@@ -1,6 +1,7 @@
 package com.example.mytodo_java;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -18,6 +19,7 @@ RecyclerView myRecyclerView;
 FloatingActionButton addBookBtn;
 DatabaseHelper myDB;
 ArrayList<String> book_id,book_title,book_author,book_pages;
+customAdapter customAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,10 @@ ArrayList<String> book_id,book_title,book_author,book_pages;
         book_pages = new ArrayList<>();
 
         storeDataInArray();
+        //make sure to call sotreDataInArray() before customAdapter so that we can read the data from our database and store it in our array
+        customAdapter = new customAdapter(this,book_id,book_title,book_author,book_pages);
+        myRecyclerView.setAdapter(customAdapter);
+        myRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
     }
 
