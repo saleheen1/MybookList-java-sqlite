@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Mytodojava">
-        <activity android:name=".UpdateActivity"></activity>
+        <activity android:name=".UpdateActivity"
+            android:parentActivityName=".MainActivity"
+            ></activity>
         <activity
             android:name=".AddItemActivity"
             android:label="Add book"

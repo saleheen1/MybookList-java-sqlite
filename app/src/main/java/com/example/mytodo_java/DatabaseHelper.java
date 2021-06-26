@@ -1,5 +1,6 @@
 package com.example.mytodo_java;
 
+import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -74,11 +75,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
          cv.put(COLUMN_AUTHOR,author);
          cv.put(COLUMN_PAGES,pages);
         long result=  db.update(TABLE_NAME,cv,"id=?",new String[]{row_id});
-if(result == -1){
-    Toast.makeText(context,"Operation failed",Toast.LENGTH_SHORT).show();
-}
-else{
-    Toast.makeText(context,"Successfully added to database",Toast.LENGTH_SHORT).show();
-}
+        if(result == -1){
+            Toast.makeText(context,"Operation failed",Toast.LENGTH_SHORT).show();
+        }
+        else{
+            Toast.makeText(context,"Successfully added to database",Toast.LENGTH_SHORT).show();
+        }
     }
+
+    void deleteOneRow(String row_id){
+         SQLiteDatabase db = this.getWritableDatabase();
+        long result=  db.delete(TABLE_NAME,"id=?",new String[]{row_id});
+        if(result == -1){
+            Toast.makeText(context,"Failed to delete",Toast.LENGTH_SHORT).show();
+        }
+        else{
+            Toast.makeText(context,"Successfully deleted from database",Toast.LENGTH_SHORT).show();
+        }
+    }
+
 }
