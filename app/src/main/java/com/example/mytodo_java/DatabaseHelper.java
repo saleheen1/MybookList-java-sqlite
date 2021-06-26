@@ -22,7 +22,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_AUTHOR = "book_author";
     private static final String COLUMN_PAGES = "book_pages";
 
-    public DatabaseHelper(@Nullable Context context) {
+     DatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context = context;
     }
@@ -65,5 +65,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             cursor = db.rawQuery(query,null);
         }
         return cursor;
+    }
+
+    void updateData(String title, String author, String pages,String row_id){
+         SQLiteDatabase db = this.getWritableDatabase();
+         ContentValues cv = new ContentValues();
+         cv.put(COLUMN_TITLE,title);
+         cv.put(COLUMN_AUTHOR,author);
+         cv.put(COLUMN_PAGES,pages);
+        long result=  db.update(TABLE_NAME,cv,"id=?",new String[]{row_id});
+if(result == -1){
+    Toast.makeText(context,"Operation failed",Toast.LENGTH_SHORT).show();
+}
+else{
+    Toast.makeText(context,"Successfully added to database",Toast.LENGTH_SHORT).show();
+}
     }
 }

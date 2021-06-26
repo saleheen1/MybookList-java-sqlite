@@ -22,14 +22,17 @@ String title,author,pages,id;
         pages_input = findViewById(R.id.pages_updateId);
         updatebtn = findViewById(R.id.updateItem_btnId);
 
+        getAndSetIntentData();
+
         updatebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                DatabaseHelper dbhelper = new DatabaseHelper(UpdateActivity.this);
+                dbhelper.updateData(title_input.getText().toString(),author_input.getText().toString(),pages_input.getText().toString(),id);
             }
         });
 
-        getAndSetIntentData();
+
     }
     void getAndSetIntentData(){
         //receiving data that was sent by putExtra

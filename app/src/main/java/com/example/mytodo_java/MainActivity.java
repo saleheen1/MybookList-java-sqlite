@@ -1,5 +1,6 @@
 package com.example.mytodo_java;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -45,10 +46,19 @@ customAdapter customAdapter;
 
         storeDataInArray();
         //make sure to call sotreDataInArray() before customAdapter so that we can read the data from our database and store it in our array
-        customAdapter = new customAdapter(this,book_id,book_title,book_author,book_pages);
+        customAdapter = new customAdapter(MainActivity.this,this,book_id,book_title,book_author,book_pages);
         myRecyclerView.setAdapter(customAdapter);
         myRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+    }
+
+    //need this method to refresh this activity when it gets result or data gets updated
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode ==1){
+            recreate();
+        }
     }
 
     void storeDataInArray(){

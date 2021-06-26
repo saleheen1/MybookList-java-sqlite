@@ -1,5 +1,6 @@
 package com.example.mytodo_java;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -18,8 +19,10 @@ public class customAdapter extends RecyclerView.Adapter<customAdapter.MyViewHold
     private Context context;
     private ArrayList book_id,book_title,book_author,book_pages;
     int pos;
-
-    public customAdapter(Context context, ArrayList book_id, ArrayList book_title, ArrayList book_author, ArrayList book_pages) {
+//need to refresh the activity when data gets updated
+    Activity activity;
+    public customAdapter(Activity activity, Context context, ArrayList book_id, ArrayList book_title, ArrayList book_author, ArrayList book_pages) {
+        this.activity = activity;
         this.context = context;
         this.book_id = book_id;
         this.book_title = book_title;
@@ -54,8 +57,8 @@ public class customAdapter extends RecyclerView.Adapter<customAdapter.MyViewHold
                 intent.putExtra("title",String.valueOf(book_title.get(position)));
                 intent.putExtra("author",String.valueOf(book_author.get(position)));
                 intent.putExtra("pages",String.valueOf(book_pages.get(position)));
-
-                context.startActivity(intent);
+//to refresh the activity when data updates, instead of using context.startActivity(intent), we will use:
+                activity.startActivityForResult(intent,1);
             }
         });
     }
