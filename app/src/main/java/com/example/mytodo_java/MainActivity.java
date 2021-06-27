@@ -15,6 +15,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -27,6 +29,8 @@ FloatingActionButton addBookBtn;
 DatabaseHelper myDB;
 ArrayList<String> book_id,book_title,book_author,book_pages;
 customAdapter customAdapter;
+ImageView noDataImage;
+TextView noDataTxt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +39,8 @@ customAdapter customAdapter;
 
         myRecyclerView = findViewById(R.id.myRecycler);
         addBookBtn = findViewById(R.id.bookPageBtnId);
+        noDataImage = findViewById(R.id.noDataImage);
+        noDataTxt = findViewById(R.id.noDataTxt);
 
         addBookBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,9 +76,14 @@ customAdapter customAdapter;
     void storeDataInArray(){
         Cursor cursor = myDB.readAllData();
         if (cursor.getCount()==0){
+            noDataImage.setVisibility(View.VISIBLE);
+            noDataTxt.setVisibility(View.VISIBLE);
             Toast.makeText(this,"NO Data found!",Toast.LENGTH_SHORT).show();
         }else{
             while (cursor.moveToNext()){
+                noDataImage.setVisibility(View.GONE);
+                noDataTxt.setVisibility(View.GONE);
+
                 book_id.add(cursor.getString(0));
                 book_title.add(cursor.getString(1));
                 book_author.add(cursor.getString(2));

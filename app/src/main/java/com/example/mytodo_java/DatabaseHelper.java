@@ -3,12 +3,14 @@ package com.example.mytodo_java;
 import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -53,6 +55,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
            //-1 means operation failed
            Toast.makeText(context,"Operation Failed",Toast.LENGTH_SHORT).show();
        }else{
+
            Toast.makeText(context,"Data successfully added to database",Toast.LENGTH_SHORT).show();
        }
     }

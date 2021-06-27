@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -19,6 +21,7 @@ public class customAdapter extends RecyclerView.Adapter<customAdapter.MyViewHold
     private Context context;
     private ArrayList book_id,book_title,book_author,book_pages;
     int pos;
+    Animation translate_anim;
 //need to refresh the activity when data gets updated
     Activity activity;
     public customAdapter(Activity activity, Context context, ArrayList book_id, ArrayList book_title, ArrayList book_author, ArrayList book_pages) {
@@ -80,6 +83,9 @@ public class customAdapter extends RecyclerView.Adapter<customAdapter.MyViewHold
             book_pages_txt = itemView.findViewById(R.id.page_number_id);
 
             myListRowLayout = itemView.findViewById(R.id.myListLayout);
+            //we want to set animation to the root element
+            translate_anim = AnimationUtils.loadAnimation(context,R.anim.translate_anim);
+            myListRowLayout.setAnimation(translate_anim);
         }
     }
 }
