@@ -1,13 +1,19 @@
 package com.example.mytodo_java;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -73,5 +79,50 @@ customAdapter customAdapter;
                 book_pages.add(cursor.getString(3));
             }
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.my_menu,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    //when we click on the menu then below code works
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.delete_all){
+            deleteAllCofirmation();
+
+
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    void deleteAllCofirmation(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Delete all item");
+        builder.setMessage("Are you sure?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                DatabaseHelper databaseHelper = new DatabaseHelper(MainActivity.this);
+                databaseHelper.deleteAllData();
+                //we need to refresh the page when all item gets deleted . so we will go the same activity we are already in (main activity)
+                Intent intent = new Intent(MainActivity.this,MainActivity.class);
+                startActivity(intent);
+                Toast.makeText(MainActivity.this,"All item deleted",Toast.LENGTH_SHORT).show();
+                finish();
+                 // pops from the current page and get back to previous page
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        builder.create().show(); //need to write this to show the alert dialogue
     }
 }

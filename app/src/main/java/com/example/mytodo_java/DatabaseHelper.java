@@ -94,4 +94,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    //delete all row
+    void deleteAllData(){
+         SQLiteDatabase db = this.getWritableDatabase();
+         db.execSQL("DELETE FROM "+ TABLE_NAME);
+    }
+
 }
